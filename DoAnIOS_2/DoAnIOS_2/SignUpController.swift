@@ -7,15 +7,15 @@
 
 import UIKit
 
-struct Credential: Codable {
+struct Users_Credentical: Codable {
     var username: String
-    var email: String
+    //var email: String
     var password: String
 }
 
 enum SignUpError: Error {
     case invalidUserName
-    case invalidEmail
+   // case invalidEmail
     case invalidPassword
     case invalidPasswordNotMacth
     case noUser
@@ -25,8 +25,8 @@ enum SignUpError: Error {
         switch self {
         case .invalidUserName:
             return "Please enter vaild username"
-        case .invalidEmail:
-            return "Please enter vaild email"
+      /*  case .invalidUserName:
+            return "Please enter vaild email"*/
         case .invalidPassword:
             return "Please enter vaild password"
         case .invalidPasswordNotMacth:
@@ -40,21 +40,21 @@ enum SignUpError: Error {
 class SignUpController: UIViewController {
     
     @IBOutlet weak var txtUserName: UITextField!
-    @IBOutlet weak var txtEmail: UITextField!
+   // @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
     @IBOutlet weak var txtConfirmPW: UITextField!
     
-    let alertView = UIAlertController(title: "Error", message: "some massage", preferredStyle: .alert)
+  /*  let alertView = UIAlertController(title: "Error", message: "some massage", preferredStyle: .alert)*/
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        let closeAction = UIAlertAction(title: "Close", style: .default){
+        /*let closeAction = UIAlertAction(title: "Close", style: .default){
             (action) in
-            self.alertView.dismiss(animated: true, completion: nil)
+            self.alertView.dismiss(animated: true)
         }
-        alertView.addAction(closeAction)
+        alertView.addAction(closeAction)*/
     }
     
 
@@ -62,17 +62,23 @@ class SignUpController: UIViewController {
         do {
             try handleSignUp()
         } catch {
-            let signupError = error as? SignUpError
-            alertView.message = signupError?.localizedDescription
-            self.present(alertView, animated: true, completion: nil)
+            if let signupError = error as? SignUpError {
+                //alertView.message = signupError.localizedDescription
+                self.showAlert(message: signupError.localizedDescription)
+            } else {
+                self.showAlert(message: "Đã xảy ra lỗi không xác định.")
+                //alertView.message = "Đã xảy ra lỗi không xác định."
+            }
+            //hien thong bao alert
+            //self.present(alertView, animated: true)
         }
     }
     func handleSignUp() throws {
-        // declare password and confirmPassword outside the if-let
+        // khai bao
         var passwordText = ""
         var confirmPasswordText = ""
         var usernameText = ""
-        var emailText = ""
+        //var emailText = ""
         // check username
         if let username = txtUserName.text, !username.isEmpty {
             usernameText = username
@@ -81,11 +87,11 @@ class SignUpController: UIViewController {
         }
 
         // check email
-        if let email = txtEmail.text, !email.isEmpty {
+       /* if let email = txtEmail.text, !email.isEmpty {
             emailText = email
         } else {
             throw SignUpError.invalidEmail
-        }
+        }*/
 
         // check password
         if let password = txtPassword.text, !password.isEmpty {
@@ -110,27 +116,26 @@ class SignUpController: UIViewController {
 
         // store to user defaults
         //Truong hop credentials da co san du lieu truoc do
-        if let data = UserDefaults.standard.value(forKey: "credentials") as? Data, let credentials: [Credential]? = try? PropertyListDecoder().decode(Array<Credential>.self, from: data){
-                 
-                  var users = credentials
-                  users?.append(Credential(username: usernameText, email: emailText, password: passwordText))
+        if let data = UserDefaults.standard.value(forKey: "user_credenticals") as? Data, let user_credenticals: [Users_Credentical] = try? PropertyListDecoder().decode(Array<Users_Credentical>.self, from: data){
+                  var users = user_credenticals
+                users.append(Users_Credentical(username: usernameText, password: passwordText))
                   let encodeData = try? PropertyListEncoder().encode(users)
-                  UserDefaults.standard.set(encodeData, forKey: "credentials")
-                  
-                  self.dismiss(animated: true, completion: nil)
+                  UserDefaults.standard.set(encodeData, forKey: "user_credenticals")
+                  //Dong man hinh Sign up sau khi dang ky thanh cong va quay ve man hinh Login
+                  self.dismiss(animated: true)
                   print("success")
                   print(users)
               }
         //Truong hop credentials chua co du lieu truoc do
             else {
-                let credential = Credential(username: usernameText, email: emailText, password: passwordText)
-                let encodeData = try? PropertyListEncoder().encode([credential])
-                UserDefaults.standard.set(encodeData, forKey: "credentials")
+                let user_credentical = Users_Credentical(username: usernameText, password: passwordText)
+                let encodeData = try? PropertyListEncoder().encode([user_credentical])
+                UserDefaults.standard.set(encodeData, forKey: "user_credenticals")
                 //throw SignUpError.noUser
-                //self.dismiss(animated: true, completion: nil)
-                    print("chua co du lieu truoc do thi insert moi")
-                    print(credential)
-                    
+                //Dong man hinh Sign up sau khi dang ky thanh cong va quay ve man hinh Login
+                 self.dismiss(animated: true)
+                 print("chua co du lieu truoc do thi insert moi")
+                 print(user_credentical)
                 }
 
         }
@@ -143,5 +148,15 @@ class SignUpController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
 }
+//Phan mo rong
+/*extension UIViewController {
+    func showAlert(title: String = "Error", message: String = "Some message", buttonTitle: String = "Close") {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let close = UIAlertAction(title: buttonTitle, style: .default, handler: nil)
+        alert.addAction(close)
+        self.present(alert, animated: true, completion: nil)
+    }
+}
+*/
