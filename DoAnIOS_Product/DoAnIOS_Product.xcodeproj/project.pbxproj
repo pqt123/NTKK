@@ -27,6 +27,10 @@
 		CE9A29002DB9370A00EDE3EF /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9A28FA2DB9370A00EDE3EF /* FMDatabase.m */; };
 		CE9A29042DB938AF00EDE3EF /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9A29032DB938AF00EDE3EF /* Product.swift */; };
 		CE9A290B2DB93C6800EDE3EF /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9A290A2DB93C6800EDE3EF /* ProductCell.swift */; };
+		CEB7C9722DBB28150054A4A7 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7C9712DBB28150054A4A7 /* LoginController.swift */; };
+		CEB7C9742DBB2C7F0054A4A7 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7C9732DBB2C7F0054A4A7 /* SignUpController.swift */; };
+		CEB7C9762DBB2EDE0054A4A7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7C9752DBB2EDE0054A4A7 /* User.swift */; };
+		CEB7C9782DBB50D20054A4A7 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7C9772DBB50D20054A4A7 /* HomeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +82,10 @@
 		CE9A28FA2DB9370A00EDE3EF /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMDatabase.m; path = ../../../../fmdb/src/fmdb/FMDatabase.m; sourceTree = "<group>"; };
 		CE9A29032DB938AF00EDE3EF /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		CE9A290A2DB93C6800EDE3EF /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
+		CEB7C9712DBB28150054A4A7 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		CEB7C9732DBB2C7F0054A4A7 /* SignUpController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
+		CEB7C9752DBB2EDE0054A4A7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		CEB7C9772DBB50D20054A4A7 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +228,9 @@
 			children = (
 				CE41A1062DB8C8840008648B /* ProductDetailController.swift */,
 				CE5E1AB42DB948AA0043DD96 /* ProductTableViewController.swift */,
+				CEB7C9712DBB28150054A4A7 /* LoginController.swift */,
+				CEB7C9732DBB2C7F0054A4A7 /* SignUpController.swift */,
+				CEB7C9772DBB50D20054A4A7 /* HomeViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -228,6 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				CE9A29032DB938AF00EDE3EF /* Product.swift */,
+				CEB7C9752DBB2EDE0054A4A7 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -376,11 +388,15 @@
 				CE9A28FB2DB9370A00EDE3EF /* FMResultSet.m in Sources */,
 				CE9A28FE2DB9370A00EDE3EF /* FMDatabaseQueue.m in Sources */,
 				CE41A1072DB8C8840008648B /* ProductDetailController.swift in Sources */,
+				CEB7C9722DBB28150054A4A7 /* LoginController.swift in Sources */,
 				CE9A29002DB9370A00EDE3EF /* FMDatabase.m in Sources */,
 				CE41A1032DB8C8840008648B /* AppDelegate.swift in Sources */,
 				CE9A29042DB938AF00EDE3EF /* Product.swift in Sources */,
 				CE9A28FF2DB9370A00EDE3EF /* FMDatabaseAdditions.m in Sources */,
+				CEB7C9762DBB2EDE0054A4A7 /* User.swift in Sources */,
 				CE9A28FD2DB9370A00EDE3EF /* FMDatabasePool.m in Sources */,
+				CEB7C9742DBB2C7F0054A4A7 /* SignUpController.swift in Sources */,
+				CEB7C9782DBB50D20054A4A7 /* HomeViewController.swift in Sources */,
 				CE9A290B2DB93C6800EDE3EF /* ProductCell.swift in Sources */,
 				CE5E1AB52DB948AA0043DD96 /* ProductTableViewController.swift in Sources */,
 				CE85D5D62DB9F9000099C0C9 /* Database.swift in Sources */,

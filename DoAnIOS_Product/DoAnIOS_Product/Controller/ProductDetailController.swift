@@ -93,7 +93,7 @@ class ProductDetailController: UIViewController, UITextFieldDelegate,UIImagePick
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
        //print("Tu dong goi truoc khi chuyen man hinh ve A")
-       let prod_name = productName.text ?? ""
+        let prod_name = productName.text ?? ""
         let prod_qty = Int(productQty.text ?? "0") ?? 0
         let prod_price = Double(productPrice.text ?? "0") ?? 0.0
 

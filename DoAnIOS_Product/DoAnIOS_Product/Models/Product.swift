@@ -8,14 +8,7 @@
 import UIKit
 
 class Product {
-    
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
+
     // MARK: Properties
         var prod_name:String
         var prod_qty:Int
