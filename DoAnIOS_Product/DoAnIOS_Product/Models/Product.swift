@@ -10,6 +10,7 @@ import UIKit
 class Product {
 
     // MARK: Properties
+        var prod_id:Int?
         var prod_name:String
         var prod_qty:Int
         var prod_price:Double
@@ -17,8 +18,8 @@ class Product {
         //var ratingValue:Int
         
         // MARK: Constructors
-    init?(prod_name: String, prod_qty: Int, prod_price:Double, prod_image: UIImage? = nil) {
-            // Khong tao duoc mon an
+    init?(prod_id:Int, prod_name: String, prod_qty: Int, prod_price:Double, prod_image: UIImage? = nil) {
+            // Khong tao duoc san pham
             if prod_name.isEmpty {
                 return nil
             }
@@ -31,7 +32,7 @@ class Product {
         /*if ratingValue < 0 || ratingValue > 5 {
                 return nil
             }*/
-            
+            self.prod_id = prod_id
             self.prod_name = prod_name
             self.prod_qty = prod_qty
             self.prod_price = prod_price

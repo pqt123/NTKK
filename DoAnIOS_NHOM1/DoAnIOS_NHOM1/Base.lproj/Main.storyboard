@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Q3m-JA-W6B">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
@@ -65,12 +65,12 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="4cl-jZ-wzz">
                             <connections>
                                 <action selector="newProduct:" destination="n7r-tn-jPd" id="dqV-dB-j0b"/>
+                                <segue destination="aww-k6-Zyz" kind="presentation" modalPresentationStyle="fullScreen" id="so9-nA-HRu"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="navigation" destination="YEy-dj-El1" id="bhK-p0-o3r"/>
-                        <segue destination="rib-PZ-cAh" kind="presentation" id="1v9-kM-W6G"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rXd-yT-YR1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -80,7 +80,7 @@
         <!--New Product-->
         <scene sceneID="cvr-En-e01">
             <objects>
-                <viewController storyboardIdentifier="ProductDetailController" id="NhO-ec-N36" customClass="ProductDetailController" customModule="DoAnIOS_NHOM1" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProductDetailController" modalPresentationStyle="fullScreen" id="NhO-ec-N36" customClass="ProductDetailController" customModule="DoAnIOS_NHOM1" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fYz-bh-cT4">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -136,16 +136,15 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Product" id="eK6-bA-BNJ">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="bKN-dC-gbJ">
-                            <connections>
-                                <action selector="cancel:" destination="NhO-ec-N36" id="Rp0-mR-K8C"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="okE-TB-qAp">
-                            <connections>
-                                <segue destination="4yc-7U-nib" kind="unwind" unwindAction="unwindFromProductDetailController:" id="hnK-ZI-Lac"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="v5g-7a-d2W"/>
+                        <rightBarButtonItems>
+                            <barButtonItem id="okE-TB-qAp">
+                                <connections>
+                                    <segue destination="4yc-7U-nib" kind="unwind" unwindAction="unwindFromProductDetailController:" id="hnK-ZI-Lac"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Save" id="L9b-c4-NYD"/>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="productImageView" destination="or8-Mu-cXx" id="fHm-B7-2FD"/>
@@ -162,7 +161,7 @@
                 </tapGestureRecognizer>
                 <exit id="4yc-7U-nib" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2814.5038167938928" y="-738.0281690140846"/>
+            <point key="canvasLocation" x="2707.6335877862593" y="-738.0281690140846"/>
         </scene>
         <!--Login Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -339,32 +338,14 @@
                         <viewLayoutGuide key="safeArea" id="zmH-Y9-rOI"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" id="mtb-2H-ZPx"/>
                     <connections>
                         <outlet property="userName" destination="BGZ-vK-JGT" id="6fg-As-Xqh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YJb-77-UBP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1601" y="-19"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="CDA-F9-K5y">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="rib-PZ-cAh" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="tG1-Jv-Qxh"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="5h3-bm-b7g">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="NhO-ec-N36" kind="relationship" relationship="rootViewController" id="ffD-Q8-G4u"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="UrJ-qT-ABu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1866.4122137404579" y="-738.0281690140846"/>
+            <point key="canvasLocation" x="1602" y="-27"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="dPC-BM-PHc">
@@ -383,6 +364,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N3D-bp-K8H" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-58.778625954198468" y="-738.0281690140846"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="PHv-aK-Gcl">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aww-k6-Zyz" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Roj-cV-0Ke">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="NhO-ec-N36" kind="relationship" relationship="rootViewController" id="vac-di-gaR"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kX2-QX-ZDq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1780.916030534351" y="-738.0281690140846"/>
         </scene>
     </scenes>
     <resources>

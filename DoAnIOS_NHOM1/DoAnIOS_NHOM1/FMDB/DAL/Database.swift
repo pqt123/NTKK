@@ -162,20 +162,20 @@ class Database{
     }
     // Kiểm tra thông tin đăng nhập
     func checkLogin(user_username: String, user_password: String) -> Bool {
-        var isValid = false
+        var OK = false
         if open() {
             let sql = "SELECT * FROM \(USER_TABLE_NAME) WHERE \(USER_NAME) = ? AND \(USER_PASSWORD) = ?"
             do {
                 let result = try database!.executeQuery(sql, values: [user_username, user_password])
                 if result.next() {
-                    isValid = true //Neu tim thay ket qua, dang nhap thanh cong
+                    OK = true //Neu tim thay ket qua, dang nhap thanh cong
                 }
             } catch {
                 os_log("Khong the truy van CSDL")
             }
             close()
         }
-        return isValid
+        return OK
     }
     //Kiem tra username co ton tai chua ?
     func isUsernameExist(user_username: String) -> Bool {

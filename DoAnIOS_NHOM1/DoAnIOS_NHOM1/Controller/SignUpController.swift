@@ -66,7 +66,6 @@ class SignUpController: UIViewController, UITextFieldDelegate, UIImagePickerCont
             if countPw < 5 {
                 showAlert(message: "Password phai chua tren 5 so")
                 return
-                
             }
             passwordText = password
         }else{

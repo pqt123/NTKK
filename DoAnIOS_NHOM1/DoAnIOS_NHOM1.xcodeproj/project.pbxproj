@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CEB7EDCD2DC924A500FEEC0B /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7EDCC2DC924A500FEEC0B /* TestViewController.swift */; };
 		CEF3974C2DBF686A00EF25EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3974B2DBF686A00EF25EE /* AppDelegate.swift */; };
 		CEF3974E2DBF686A00EF25EE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3974D2DBF686A00EF25EE /* SceneDelegate.swift */; };
 		CEF397502DBF686A00EF25EE /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3974F2DBF686A00EF25EE /* LoginController.swift */; };
@@ -51,6 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CEB7EDCC2DC924A500FEEC0B /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		CEF397482DBF686A00EF25EE /* DoAnIOS_NHOM1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoAnIOS_NHOM1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF3974B2DBF686A00EF25EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEF3974D2DBF686A00EF25EE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				CEF3979F2DBF6DB700EF25EE /* HomeViewController.swift */,
 				CEF397A62DBFB6DD00EF25EE /* ProductDetailController.swift */,
 				CEF397A82DBFB78D00EF25EE /* ProductTableViewController.swift */,
+				CEB7EDCC2DC924A500FEEC0B /* TestViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 			files = (
 				CEF397502DBF686A00EF25EE /* LoginController.swift in Sources */,
 				CEF3974C2DBF686A00EF25EE /* AppDelegate.swift in Sources */,
+				CEB7EDCD2DC924A500FEEC0B /* TestViewController.swift in Sources */,
 				CEF3974E2DBF686A00EF25EE /* SceneDelegate.swift in Sources */,
 				CEF397922DBF6B2E00EF25EE /* FMDatabase.m in Sources */,
 				CEF397A92DBFB78D00EF25EE /* ProductTableViewController.swift in Sources */,

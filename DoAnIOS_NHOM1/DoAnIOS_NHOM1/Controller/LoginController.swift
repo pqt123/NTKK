@@ -74,12 +74,12 @@ class LoginController: UIViewController, UITextFieldDelegate, UIImagePickerContr
         }
         //Kiem tra du lieu trong bang, neu co tai khoan thi dang nhap thanh cong
         if dao.checkLogin(user_username: userNameText, user_password: passwordText) {
-            // Đăng nhập thành công, chuyển sang màn hình chính
+            // Dang nhap thanh cong, chuyen den man hinh Home
             showAlert(message: "Dang nhap thanh cong!") {
                 self.homTextUserName = userNameText
                 self.goToHomeView() // Chuyen den man hinh Home
             }
-        } else {
+        }else {
             showAlert(message: "Ten username hoac password khong dung.")
             return
         }

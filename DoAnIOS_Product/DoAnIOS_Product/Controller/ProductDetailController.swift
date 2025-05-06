@@ -11,16 +11,12 @@ import UIKit
 class ProductDetailController: UIViewController, UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
     // MARK: Properties
-    //@IBOutlet weak var mealName: UITextField!
-    //@IBOutlet weak var mealImageView: UIImageView!
-    //@IBOutlet weak var mealRating: UIRating!
-   // @IBOutlet weak var navigation: UINavigationItem!
-
     @IBOutlet weak var productName: UITextField!
     @IBOutlet weak var productQty: UITextField!
     @IBOutlet weak var productPrice: UITextField!
     @IBOutlet weak var productImageView: UIImageView!
-    // Dinh nghia bien meal dung de truyen tham so giua 2 man hinh A va B
+    var txtProd_id:Int?
+    // Dinh nghia bien product dung de truyen tham so giua 2 man hinh A va B
     var product:Product?
 
     override func viewDidLoad() {
@@ -30,9 +26,13 @@ class ProductDetailController: UIViewController, UITextFieldDelegate,UIImagePick
        
        // Lay du lieu truyen sang tu man hinh TableView (Neu co)
        if let product = product {
+           
+           txtProd_id = product.prod_id
+           //check _id
+           print("check ID : \(txtProd_id)")
           // navigation.title = product.prod_name
            productName.text = product.prod_name
-           productQty.text  = String(format: "%.2f", product.prod_qty)
+           productQty.text  = String(product.prod_qty)
            productPrice.text = String(format: "%.2f", product.prod_price)
            productImageView.image = product.prod_image
        }
@@ -93,10 +93,11 @@ class ProductDetailController: UIViewController, UITextFieldDelegate,UIImagePick
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
        //print("Tu dong goi truoc khi chuyen man hinh ve A")
+        let prod_id = txtProd_id ?? 0
         let prod_name = productName.text ?? ""
         let prod_qty = Int(productQty.text ?? "0") ?? 0
         let prod_price = Double(productPrice.text ?? "0") ?? 0.0
 
-        product = Product(prod_name: prod_name, prod_qty: prod_qty, prod_price: prod_price,  prod_image: productImageView.image)
+        product = Product(prod_id:prod_id, prod_name: prod_name, prod_qty: prod_qty, prod_price: prod_price,  prod_image: productImageView.image)
     }
 }

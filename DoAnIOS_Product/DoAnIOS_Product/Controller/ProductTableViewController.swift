@@ -84,7 +84,7 @@ class ProductTableViewController: UITableViewController {
              cell.addGestureRecognizer(cell.onTap!)
              }
              */
-            //print(product)
+            print(product.prod_id)
             return cell
         }
         
@@ -104,7 +104,6 @@ class ProductTableViewController: UITableViewController {
                 if let indexPath = tableView.indexPath(for: cell) {
                     // Truyen meal sang ProductDetailController
                     productDetail.product = products[indexPath.row]
-                    
                     // Danh dau duong di
                     navigationType = .editProduct
                     
@@ -170,7 +169,7 @@ class ProductTableViewController: UITableViewController {
             
             // Luu vi tri cell duoc chon
             selectedIndexpath = indexPath
-            
+           // print("data : \(productDetail.product)")
             // Chuyen sang man hinh khac
             present(productDetail, animated: true)
         }
@@ -210,6 +209,8 @@ class ProductTableViewController: UITableViewController {
                         products[indexPath.row] = product
                         
                         // Update tableView cell
+                        // Edit product moi vao CSDL
+                        let _ = dao.editProduct(product: product)
                         tableView.reloadRows(at: [indexPath], with: .left)
                     }
                 }
