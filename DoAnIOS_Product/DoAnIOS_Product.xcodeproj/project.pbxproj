@@ -19,6 +19,10 @@
 		CE4BF88A2DB93002000FAB77 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CE4BF8892DB93002000FAB77 /* libsqlite3.0.tbd */; };
 		CE5E1AB52DB948AA0043DD96 /* ProductTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E1AB42DB948AA0043DD96 /* ProductTableViewController.swift */; };
 		CE85D5D62DB9F9000099C0C9 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85D5D52DB9F9000099C0C9 /* Database.swift */; };
+		CE8C48FA2DCB369B0074A3AF /* InvoiceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8C48F92DCB369B0074A3AF /* InvoiceTableViewController.swift */; };
+		CE8C48FC2DCB5B6E0074A3AF /* InvoiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8C48FB2DCB5B6E0074A3AF /* InvoiceCell.swift */; };
+		CE8C48FF2DCB6EFA0074A3AF /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8C48FE2DCB6EFA0074A3AF /* Customer.swift */; };
+		CE8C49012DCBADB20074A3AF /* CustomerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8C49002DCBADB20074A3AF /* CustomerCell.swift */; };
 		CE9A28FB2DB9370A00EDE3EF /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9A28F02DB9370A00EDE3EF /* FMResultSet.m */; };
 		CE9A28FC2DB9370A00EDE3EF /* info-xrOS.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE9A28F12DB9370A00EDE3EF /* info-xrOS.plist */; };
 		CE9A28FD2DB9370A00EDE3EF /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9A28F22DB9370A00EDE3EF /* FMDatabasePool.m */; };
@@ -72,6 +76,10 @@
 		CE4BF8892DB93002000FAB77 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		CE5E1AB42DB948AA0043DD96 /* ProductTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableViewController.swift; sourceTree = "<group>"; };
 		CE85D5D52DB9F9000099C0C9 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
+		CE8C48F92DCB369B0074A3AF /* InvoiceTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceTableViewController.swift; sourceTree = "<group>"; };
+		CE8C48FB2DCB5B6E0074A3AF /* InvoiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceCell.swift; sourceTree = "<group>"; };
+		CE8C48FE2DCB6EFA0074A3AF /* Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
+		CE8C49002DCBADB20074A3AF /* CustomerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerCell.swift; sourceTree = "<group>"; };
 		CE9A28EE2DB9370900EDE3EF /* DoAnIOS_Product-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DoAnIOS_Product-Bridging-Header.h"; sourceTree = "<group>"; };
 		CE9A28EF2DB9370A00EDE3EF /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDatabasePool.h; path = ../../../../fmdb/src/fmdb/FMDatabasePool.h; sourceTree = "<group>"; };
 		CE9A28F02DB9370A00EDE3EF /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMResultSet.m; path = ../../../../fmdb/src/fmdb/FMResultSet.m; sourceTree = "<group>"; };
@@ -244,6 +252,7 @@
 				CEB7EDC82DC8FFAB00FEEC0B /* InvoiceDetailController.swift */,
 				CEB7EDCA2DC90D2D00FEEC0B /* SelectProductController.swift */,
 				CECACFFD2DCA1CA20051620C /* CustomerController.swift */,
+				CE8C48F92DCB369B0074A3AF /* InvoiceTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -255,6 +264,7 @@
 				CEB7C9752DBB2EDE0054A4A7 /* User.swift */,
 				CEB7EDC42DC8F90C00FEEC0B /* Invoice.swift */,
 				CEB7EDC62DC8F9F900FEEC0B /* InvoiceDetail.swift */,
+				CE8C48FE2DCB6EFA0074A3AF /* Customer.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -263,6 +273,8 @@
 			isa = PBXGroup;
 			children = (
 				CE9A290A2DB93C6800EDE3EF /* ProductCell.swift */,
+				CE8C48FB2DCB5B6E0074A3AF /* InvoiceCell.swift */,
+				CE8C49002DCBADB20074A3AF /* CustomerCell.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -403,15 +415,19 @@
 				CE9A28FB2DB9370A00EDE3EF /* FMResultSet.m in Sources */,
 				CE9A28FE2DB9370A00EDE3EF /* FMDatabaseQueue.m in Sources */,
 				CEB7EDC52DC8F90C00FEEC0B /* Invoice.swift in Sources */,
+				CE8C48FF2DCB6EFA0074A3AF /* Customer.swift in Sources */,
 				CE41A1072DB8C8840008648B /* ProductDetailController.swift in Sources */,
 				CEB7C9722DBB28150054A4A7 /* LoginController.swift in Sources */,
 				CEB7EDC92DC8FFAB00FEEC0B /* InvoiceDetailController.swift in Sources */,
 				CE9A29002DB9370A00EDE3EF /* FMDatabase.m in Sources */,
 				CE41A1032DB8C8840008648B /* AppDelegate.swift in Sources */,
+				CE8C49012DCBADB20074A3AF /* CustomerCell.swift in Sources */,
 				CE9A29042DB938AF00EDE3EF /* Product.swift in Sources */,
 				CE9A28FF2DB9370A00EDE3EF /* FMDatabaseAdditions.m in Sources */,
 				CEB7C9762DBB2EDE0054A4A7 /* User.swift in Sources */,
 				CE9A28FD2DB9370A00EDE3EF /* FMDatabasePool.m in Sources */,
+				CE8C48FA2DCB369B0074A3AF /* InvoiceTableViewController.swift in Sources */,
+				CE8C48FC2DCB5B6E0074A3AF /* InvoiceCell.swift in Sources */,
 				CEB7C9742DBB2C7F0054A4A7 /* SignUpController.swift in Sources */,
 				CEB7EDC72DC8F9F900FEEC0B /* InvoiceDetail.swift in Sources */,
 				CEB7C9782DBB50D20054A4A7 /* HomeViewController.swift in Sources */,

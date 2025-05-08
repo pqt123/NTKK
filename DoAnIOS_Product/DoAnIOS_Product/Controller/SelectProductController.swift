@@ -18,6 +18,7 @@ class SelectProductController: UIViewController, UITableViewDelegate, UITableVie
     
     var products: [Product] = []
     weak var delegate: SelectProductDelegate?
+    private let dao = Database()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,9 +27,8 @@ class SelectProductController: UIViewController, UITableViewDelegate, UITableVie
         tableView.delegate = self
         tableView.dataSource = self
         
-        // Load dữ liệu từ database
-        let db = Database()
-        db.readProducts(products: &products)
+        //doc toan bo du lieu customer tu CSDL neu co
+        dao.readProducts(products: &products)
     }
     
     // MARK: TableView DataSource
@@ -37,9 +37,11 @@ class SelectProductController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProductCell") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "ProductCell")
         
         let product = products[indexPath.row]
+
         cell.textLabel?.text = product.prod_name
         cell.detailTextLabel?.text = "Giá: \(product.prod_price) - SL: \(product.prod_qty)"
         if let image = product.prod_image {

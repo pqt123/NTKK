@@ -92,7 +92,6 @@ class SignUpController: UIViewController {
 
     //Thuc hien inser data
     func goToLogIn(){
-        
         let storyboardLogin = UIStoryboard(name: "Main", bundle: nil)
        let logInVC = storyboardLogin.instantiateViewController(withIdentifier: logInID) as! LoginController
        //Kiem tra xem co navigationController neu co thi dung UINavigationController, neu khong co thi dung present
@@ -109,7 +108,6 @@ class SignUpController: UIViewController {
     func showAlert(message: String, completion: (() -> Void)? = nil) {
         let alert = UIAlertController(title: "Thông báo", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-            // Khi người dùng nhấn OK, thực hiện closure nếu có
             completion?()
         }))
         present(alert, animated: true)

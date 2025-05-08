@@ -17,8 +17,6 @@ class ProductCell: UITableViewCell {
     @IBOutlet weak var productPrice: UILabel!
     @IBOutlet weak var productImage: UIImageView!
     
-    //storyboard InvoiceDetailController
-    @IBOutlet weak var InvProductName: UILabel!
     
     // Bat su kien cho cell theo cach 1
     
