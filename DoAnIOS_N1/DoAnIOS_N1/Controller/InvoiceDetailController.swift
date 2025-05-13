@@ -22,7 +22,7 @@ class InvoiceDetailController: UIViewController, UITableViewDataSource, UITableV
     // Tao doi tuong truy van CSDL
     private let dao = Database()
     var invoice:Invoice?
-    var invoicedetail:InvoiceDetail?
+    var invoiceDetail:InvoiceDetail?
     private let selectProductID = "SelectProductController"
     private let selectCustomerID = "CustomerController"
     var cust_id = 0
@@ -41,8 +41,14 @@ class InvoiceDetailController: UIViewController, UITableViewDataSource, UITableV
         if let invoice = invoice{
             isViewInvoiceDetail = true
             customerNameTextField.text = invoice.customer_name
-            totalAmountLabel.text = String(format: "%.2f", invoice.inv_total)
-            let _ = dao.readInvoiceDetails(for: invoice.inv_customer_id, invoicedetails: &invoiceDetails)
+            if let inv_id = invoice.inv_id {
+                print("check_inv : \(inv_id)")
+                totalAmountLabel.text = String(format: "%.2f", invoice.inv_total)
+                let _ = dao.readInvoiceDetails(for: inv_id, invoicedetails: &invoiceDetails)
+                tableView.reloadData()
+            }else{
+                print("khong co data")
+            }
 
         }
         
@@ -132,7 +138,7 @@ class InvoiceDetailController: UIViewController, UITableViewDataSource, UITableV
     //Nut popup add customer
     @IBAction func onAddCustomerTapped(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let customerVC = storyboard.instantiateViewController(withIdentifier: selectCustomerID) as? CustomerController {
+        if let customerVC = storyboard.instantiateViewController(withIdentifier: selectCustomerID) as? SelectCustomerController {
             customerVC.delegate = self
             self.present(customerVC, animated: true)
         }
@@ -158,7 +164,7 @@ class InvoiceDetailController: UIViewController, UITableViewDataSource, UITableV
                let formattedDate = formatter.string(from: Date())
                let customer_name = customerNameTextField.text ?? ""
                
-               invoice = Invoice(inv_id: 0, inv_date: formattedDate, inv_customer_id: cust_id, inv_total: total, customer_name: customer_name, customer_phone: "y nhu tren")
+               invoice = Invoice(inv_id: 0, inv_date: formattedDate, inv_customer_id: cust_id, inv_total: total, customer_name: customer_name, customer_phone: "")
 
                if let invoice = invoice {
                    if let invoiceID = dao.insertInvoice(invoice: invoice) {

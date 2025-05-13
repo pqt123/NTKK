@@ -1,18 +1,19 @@
 //
-//  ProductTableViewController.swift
-//  DoAnIOS_Product
+//  CustomerTableViewController.swift
+//  DoAnIOS_N1
 //
-//  Created by  User on 23.04.2025.
+//  Created by  User on 13.05.2025.
 //
 
 import UIKit
 
-class ProductTableViewController: UITableViewController {
+class CustomerTableViewController: UITableViewController {
+
     //MARK
     
-    private var products = [Product]()
+    private var customers = [Customer]()
     @IBOutlet weak var navigation: UINavigationItem!
-    private let productDetailID = "ProductDetailController"
+    private let customerDetailID = "CustomerDetailController"
     
     
     // Tao doi tuong truy van CSDL
@@ -20,12 +21,12 @@ class ProductTableViewController: UITableViewController {
     
     // Dinh nghia kieu du lieu enum dung danh dau duong di
     enum NavigationType {
-        case newProduct
-        case editProduct
+        case newCustomer
+        case editCustomer
     }
     
     // Dinh nghia bien danh dau duong di
-    var navigationType:NavigationType = .newProduct
+    var navigationType:NavigationType = .newCustomer
     
     // Bien luu gia tri Indexpath
     private var selectedIndexpath:IndexPath?
@@ -36,7 +37,7 @@ class ProductTableViewController: UITableViewController {
         navigation.leftBarButtonItem = editButtonItem
         
         // Doc toan bo du lieu meals tu CSDL neu co
-        dao.readProducts(products: &products)
+        dao.readCustomers(customers: &customers)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -54,37 +55,34 @@ class ProductTableViewController: UITableViewController {
     // So luong phan tu trong Array
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return products.count
+        return customers.count
     }
     
     // indexPath = vi tri phan tu trong Array
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let reuseCell = "ProductCell"
+        let reuseCell = "CustomerCell"
         
-        if let cell = tableView.dequeueReusableCell(withIdentifier: reuseCell, for: indexPath) as? ProductCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: reuseCell, for: indexPath) as? CustomerCell {
             
             // Lay du lieu tu DataSource
-            let product = products[indexPath.row]
+            let customer = customers[indexPath.row]
             
-            // Do du lieu tu product vao cell
-            cell.productName.text = product.prod_name
-            cell.productQty.text = String(product.prod_qty)
-            cell.productPrice.text = String(format: "%.2f", product.prod_price)
-            cell.productImage.image = product.prod_image
-           // cell.rating.rating = product.ratingValue
+            // Do du lieu tu customer vao cell
+            cell.customerInfo.text = customer.customer_name + " - " + customer.customer_phone
+            
             /*
              // Bo sung them cho bat su kien theo cach 1
              if cell.onTap == nil {
              // Khoi tao cho doi tuong onTap
              cell.onTap = UITapGestureRecognizer()
              // Bat su kien cho doi tuong onTap
-             cell.onTap!.addTarget(self, action: #selector(editProduct))
+             cell.onTap!.addTarget(self, action: #selector(editCustomer))
              
              // Ket noi doi tuong onTap voi cell
              cell.addGestureRecognizer(cell.onTap!)
              }
              */
-           // print("\(product.prod_id)")
+            //print(customer.customer_id)
             return cell
         }
         
@@ -94,24 +92,24 @@ class ProductTableViewController: UITableViewController {
     }
     
     // Dinh nghia ham xu ly su kien cho cell
-    @objc private func editProduct(_ sender: UITapGestureRecognizer) {
+    @objc private func editCustomer(_ sender: UITapGestureRecognizer) {
         //print("Cell tapped")
-        // Tao doi tuong man hinh ProductDetailController
-        if let productDetail = self.storyboard!.instantiateViewController(withIdentifier: productDetailID) as? ProductDetailController {
+        // Tao doi tuong man hinh customerDetailController
+        if let customerDetail = self.storyboard!.instantiateViewController(withIdentifier: customerDetailID) as? CustomerDetailController {
             // Lay doi tuong cell duoc tap
-            if let cell = sender.view as? ProductCell {
+            if let cell = sender.view as? CustomerCell {
                 // Xac dinh vi tri cua cell trong table view
                 if let indexPath = tableView.indexPath(for: cell) {
-                    // Truyen meal sang ProductDetailController
-                    productDetail.product = products[indexPath.row]
+                    // Truyen customer sang customerDetailController
+                    customerDetail.customer = customers[indexPath.row]
                     // Danh dau duong di
-                    navigationType = .editProduct
+                    navigationType = .editCustomer
                     
                     // Luu vi tri cell duoc chon
                     selectedIndexpath = indexPath
                     
                     // Chuyen sang man hinh khac
-                    present(productDetail, animated: true)
+                    present(customerDetail, animated: true)
                 }
             }
         }
@@ -130,19 +128,20 @@ class ProductTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Xoa phan tu tu datasource
-            //san pham can xoa
-            let productDelete = products[indexPath.row]
-            //print("test delete id : \(productDelete.prod_id)")
+            //Lay khach hang can xoa
+            let customerDelete = customers[indexPath.row]
+            //print("test delete id : \(customerDelete.customer_id)")
             //goi ham xoa trong database
-            if dao.deleteProduct(product: productDelete){
+           if dao.deleteCustomer(customer: customerDelete){
                 //xoa khoi datasource
-                products.remove(at: indexPath.row)
+                customers.remove(at: indexPath.row)
                 // Delete the row from the data source
                 tableView.deleteRows(at: [indexPath], with: .fade)
                 
             } else{
-                print("Xoa san pham khong thanh cong")
+                print("Xoa khach hang khong thanh cong")
             }
+            
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
@@ -169,59 +168,58 @@ class ProductTableViewController: UITableViewController {
     // MARK: - Navigation
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //print("Cell tapped")
-        // Tao doi tuong man hinh ProductDetailController
-        if let productDetail = self.storyboard!.instantiateViewController(withIdentifier: productDetailID) as? ProductDetailController {
+        // Tao doi tuong man hinh customerDetailController
+        if let customerDetail = self.storyboard!.instantiateViewController(withIdentifier: customerDetailID) as? CustomerDetailController {
             // Lay doi tuong cell duoc tap
-            // Truyen product sang mealDetailController
-            productDetail.product = products[indexPath.row]
+            // Truyen customer sang mealDetailController
+            customerDetail.customer = customers[indexPath.row]
             
             // Danh dau duong di
-            navigationType = .editProduct
+            navigationType = .editCustomer
             
             // Luu vi tri cell duoc chon
             selectedIndexpath = indexPath
-           // print("data : \(productDetail.product)")
+           // print("data : \(customerDetail.customer)")
             // Chuyen sang man hinh khac
-            present(productDetail, animated: true)
+            present(customerDetail, animated: true)
         }
     }
     
-    @IBAction func newProduct(_ sender: UIBarButtonItem) {
-        // Tao doi tuong man hinh ProductDetailController
-        if let productDetail = self.storyboard!.instantiateViewController(withIdentifier: productDetailID) as? ProductDetailController {
+    @IBAction func newCustomer(_ sender: UIBarButtonItem) {
+        // Tao doi tuong man hinh customerDetailController
+        if let customerDetail = self.storyboard!.instantiateViewController(withIdentifier: customerDetailID) as? CustomerDetailController {
             // Danh dau duong di
-            navigationType = .newProduct
+            navigationType = .newCustomer
             
             // Chuyen sang man hinh khac
-            present(productDetail, animated: true)
-            print("test")
+            present(customerDetail, animated: true)
         }
         
     }
-    // Dinh nghia ham unwind quay ve tu ProductDetailController
-    @IBAction func unwindFromProductDetailController(_ segue: UIStoryboardSegue) {
-        //print("unwind from product detail")
-        // Lay doi tuong man hinh ProductDetailController
-        if let productDetail = segue.source as? ProductDetailController {
-            if let product = productDetail.product {
+    // Dinh nghia ham unwind quay ve tu customerDetailController
+    @IBAction func unwindFromcustomerCustomerController(_ segue: UIStoryboardSegue) {
+        //print("unwind from customer detail")
+        // Lay doi tuong man hinh customerDetailController
+        if let customerDetail = segue.source as? CustomerDetailController {
+            if let customer = customerDetail.customer {
                 switch navigationType {
-                case .newProduct:
-                    // Them product moi vao datasource
-                    products.append(product)
+                case .newCustomer:
+                    // Them customer moi vao datasource
+                    customers.append(customer)
                     // Tao mot dong (cell) moi cho tableView
-                    let newIndexPath = IndexPath(row: products.count - 1, section: 0)
+                    let newIndexPath = IndexPath(row: customers.count - 1, section: 0)
                     tableView.insertRows(at: [newIndexPath], with: .left)
-                    // Them product moi vao CSDL
-                    let _ = dao.insertProduct(product: product)
-                case .editProduct :
+                    // Them customer moi vao CSDL
+                    let _ = dao.insertCustomer(customer: customer)
+                case .editCustomer :
                     
                     if let indexPath = selectedIndexpath {
                         // Update datasource
-                        products[indexPath.row] = product
+                        customers[indexPath.row] = customer
                         
                         // Update tableView cell
-                        // Edit product moi vao CSDL
-                        let _ = dao.editProduct(product: product)
+                        // Edit customer moi vao CSDL
+                        let _ = dao.editCustomer(customer: customer)
                         tableView.reloadRows(at: [indexPath], with: .left)
                     }
                 }
@@ -232,27 +230,25 @@ class ProductTableViewController: UITableViewController {
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Lay doi tuong man hinh ProductDetailController
-        if let productDetail = segue.destination as? ProductDetailController {
+        // Lay doi tuong man hinh customerDetailController
+        if let customerDetail = segue.destination as? CustomerDetailController {
             // Lay doi tuong cell duoc tap
-            if let cell = sender as? ProductCell {
+            if let cell = sender as? CustomerCell {
                 // Xac dinh vi tri cua cell trong table view
                 if let indexPath = tableView.indexPath(for: cell) {
                     // Truyen meal sang mealDetailController
-                    productDetail.product = products[indexPath.row]
+                    customerDetail.customer = customers[indexPath.row]
                     
                     // Danh dau duong di
-                    navigationType = .editProduct
+                    navigationType = .editCustomer
                     
                     // Luu vi tri cell duoc chon
                     selectedIndexpath = indexPath
                     
                     // Chuyen sang man hinh khac
-                    //present(productDetail, animated: true)
+                    //present(customerDetail, animated: true)
                 }
             }
         }
     }
-    
-    
 }

@@ -14,6 +14,7 @@ protocol SelectProductDelegate: AnyObject {
 
 class SelectProductController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var searchProductName: UITextField!
     @IBOutlet weak var tableView: UITableView!
     
     var products: [Product] = []
@@ -58,6 +59,21 @@ class SelectProductController: UIViewController, UITableViewDelegate, UITableVie
         chooseQuantity(for: selectedProduct)
     }
     
+    @IBAction func processSearch(_ sender: UIButton) {
+        //Kiem tra text search
+        var searchText = searchProductName.text ?? ""
+        if !searchText.isEmpty{
+            print("keyword  : \(searchText)")
+            //Goi ham search cua Customer
+            products.removeAll()
+            let _ = dao.searchProduct(keyword: searchText, products: &products)
+        }else{
+            products.removeAll()
+            let _ = dao.readProducts(products: &products)
+        }
+        tableView.reloadData()
+        
+    }
     // MARK: User chon so luong can nhap
     func chooseQuantity(for product: Product) {
         let alert = UIAlertController(

@@ -1,6 +1,6 @@
 //
 //  Database.swift
-//  DoAnIOS_Product
+//  DoAnIOS_N1
 //
 //  Created by  User on 24.04.2025.
 //
@@ -224,6 +224,88 @@ class Database{
             }
         }
     }
+    
+    // 3 Sua thong tin customer
+    func editCustomer(customer: Customer) -> Bool {
+        var OK = false
+        if open() {
+            if database!.tableExists(CUSTOMER_TABLE_NAME) {
+                // Câu lệnh UPDATE, giả sử bạn xác định sản phẩm theo customer ID
+                let sql = "UPDATE \(CUSTOMER_TABLE_NAME) SET \(CUSTOMER_NAME) = ?, \(CUSTOMER_PHONE) = ? WHERE \(CUSTOMER_ID) = ?"
+
+                // ghi du lie vao bang
+                if database!.executeUpdate(sql, withArgumentsIn: [customer.customer_name, customer.customer_phone, customer.customer_id]) {
+                    os_log("Cap nhat thong tin khach hang thanh cong")
+                    OK = true
+                } else {
+                    os_log("Cap nhat thong tin khachs hang khong thanh cong", database!.lastErrorMessage())
+                }
+
+                close()
+            } else {
+                os_log("Bang du lieu Customer khong ton tai")
+            }
+        }
+        return OK
+    }
+    
+    // 4 Xoa thong tin customer
+    func deleteCustomer(customer: Customer) -> Bool {
+        var OK = false
+        if open() {
+            if database!.tableExists(CUSTOMER_TABLE_NAME) {
+                // cau lenh xoa customer theo customer id
+                let sql = "DELETE FROM \(CUSTOMER_TABLE_NAME)  WHERE \(CUSTOMER_ID) = ?"
+
+                // ghi du lie vao bang
+                if database!.executeUpdate(sql, withArgumentsIn: [ customer.customer_id]) {
+                    os_log("Xoa khach hang thanh cong")
+                    OK = true
+                } else {
+                    os_log("Xoa khach hang khong thanh cong", database!.lastErrorMessage())
+                }
+
+                close()
+            } else {
+                os_log("Bang du lieu Customer khong ton tai")
+            }
+        }
+        return OK
+    }
+    // 5 Tim kiem customer theo so dien thoai tu CSDL
+    func searchCustomer(keyword: String, customers: inout [Customer]){
+        if open(){
+            if database!.tableExists(CUSTOMER_TABLE_NAME){
+                // Cau lenh SQL
+                let sql = "SELECT * FROM \(CUSTOMER_TABLE_NAME) WHERE  \(CUSTOMER_PHONE) LIKE ?  ORDER BY \(CUSTOMER_ID) DESC"
+                // Khai bao bien chua du lieu doc ve tu CSDL
+                var result:FMResultSet?
+                do{
+                    result = try database!.executeQuery(sql, values:["%\(keyword)%"])
+                }
+                catch{
+                    os_log("Khong the truy van tu khoa Customer: ", keyword)
+                    
+                }
+                // Doc du lieu tu bien result
+                if let result = result {
+                    while result.next(){
+                        let customer_id = result.int(forColumn: CUSTOMER_ID)
+                        let customer_name = result.string(forColumn: CUSTOMER_NAME) ?? ""
+                        let customer_phone = result.string(forColumn: CUSTOMER_PHONE) ?? ""
+                        // Tao doi tuong user tu CSDL
+                        //print("data: \(customer_phone)")
+                        if let customer = Customer(customer_id: Int(customer_id), customer_name: customer_name, customer_phone: customer_phone){
+                            // Dua vao datasource cua TableView
+                            print("\(customer.customer_name)")
+                            customers.append(customer)
+                            
+                        }
+                    }
+                }
+            }
+        }
+    }
     ///1.Them invoices vao CSDL
     func insertInvoice(invoice: Invoice) -> Int? {
         var insertedId: Int? = nil
@@ -273,7 +355,7 @@ class Database{
                                                  customer_phone: customer_phone
                                             )
                         {
-                            //Dua vao datasource cua TableView
+                          //  print("inv : \(invoice.inv_customer_id) - \(invoice.customer_name)")                            //Dua vao datasource cua TableView
                             invoices.append(invoice)
                         }
                     }
@@ -320,6 +402,7 @@ class Database{
                             inv_dtl_qty: Int(inv_dtl_qty),
                             inv_dtl_price: Double(inv_dtl_price)
                         ) {
+                            print("kiem tra du lieu : \(invoicedetail.inv_dtl_inv_id)")
                             invoicedetails.append(invoicedetail)
                         }
                     }
@@ -496,6 +579,73 @@ class Database{
         }
         return OK
     }
+    // 4 Xoa thong tin customer
+    func deleteProduct(product: Product) -> Bool {
+        var OK = false
+        if open() {
+            if database!.tableExists(PRODUCT_TABLE_NAME) {
+                //Xoa data dua theo product id
+                let sql = "DELETE FROM \(PRODUCT_TABLE_NAME)  WHERE \(PRODUCT_ID) = ?"
+
+                // ghi du lie vao bang
+                if database!.executeUpdate(sql, withArgumentsIn: [product.prod_id]) {
+                    os_log("Xoa san pham thanh cong")
+                    OK = true
+                } else {
+                    os_log("Xoa san pham khong thanh cong", database!.lastErrorMessage())
+                }
+
+                close()
+            } else {
+                os_log("Bang du lieu Customer khong ton tai")
+            }
+        }
+        return OK
+    }
+    //5.Tim kiem ten san pham
+    func searchProduct(keyword: String, products: inout [Product]) {
+        if open() {
+            if database!.tableExists(PRODUCT_TABLE_NAME) {
+                // Câu lệnh SQL có điều kiện tìm kiếm
+                let sql = "SELECT * FROM \(PRODUCT_TABLE_NAME) WHERE \(PRODUCT_NAME) LIKE ? ORDER BY \(PRODUCT_ID) DESC"
+                var result: FMResultSet?
+                do {
+                    result = try database!.executeQuery(sql, values: ["%\(keyword)%"])
+                } catch {
+                    os_log("Khong the truy van tu khoa Product : ", keyword)
+                }
+
+                // Xử lý kết quả trả về
+                if let result = result {
+                    while result.next(){
+                        let prod_id = result.int(forColumn: PRODUCT_ID)
+                        let prod_name = result.string(forColumn: PRODUCT_NAME) ?? ""
+                        let prod_qty = result.int(forColumn: PRODUCT_QTY)
+                        let prod_price = result.double(forColumn: PRODUCT_PRICE)
+                        var prod_image:UIImage? = nil
+                        if let strImage = result.string(forColumn: PRODUCT_IMAGE){
+                            if !strImage.isEmpty{
+                                // Chuyen chuoi thanh anh image
+                                // B1 Chuyen chuoi thanh Data
+                                let dataImage = Data(base64Encoded: strImage, options: .ignoreUnknownCharacters)
+                                // B2 Chuyen dataImage thanh UIImage
+                                prod_image = UIImage(data: dataImage!)
+                            }
+                        }
+                        // Tao doi tuong meal tu CSDL
+                        if let product = Product(prod_id: Int(prod_id),
+                                                 prod_name: prod_name,
+                                                 prod_qty: Int(prod_qty),
+                                                 prod_price: Double(prod_price),
+                                                 prod_image: prod_image) {
+                            // Dua vao datasource cua TableView
+                            products.append(product)
+                            }
+                        }
+                    }
+                }
+            }
+        }
     // 2 Doc toan bo products tu CSDL
     func readProducts(products: inout [Product]){
         if open(){
@@ -543,4 +693,3 @@ class Database{
         }
     }
 }
-

@@ -61,7 +61,7 @@ class InvoiceTableViewController: UITableViewController {
              cell.addGestureRecognizer(cell.onTap!)
              }
              */
-            
+            print("\(invoice.inv_customer_id)")
             return cell
         }
         
@@ -93,7 +93,7 @@ class InvoiceTableViewController: UITableViewController {
                 
                 // Luu vi tri cell duoc chon
                 selectedIndexpath = indexPath
-                print("data : \(invoiceDetail.invoice)")
+                //print("data : \(invoiceDetail.invoice)")
                 // Chuyen sang man hinh khac
                 present(invoiceDetail, animated: true)
             }
