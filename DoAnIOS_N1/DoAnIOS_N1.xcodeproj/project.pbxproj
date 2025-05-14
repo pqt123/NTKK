@@ -25,6 +25,7 @@
 		CE8C48FC2DCB5B6E0074A3AF /* InvoiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8C48FB2DCB5B6E0074A3AF /* InvoiceCell.swift */; };
 		CE8C48FF2DCB6EFA0074A3AF /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8C48FE2DCB6EFA0074A3AF /* Customer.swift */; };
 		CE8C49012DCBADB20074A3AF /* CustomerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8C49002DCBADB20074A3AF /* CustomerCell.swift */; };
+		CE95DCAD2DD3A602008F0B29 /* ChangePasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE95DCAC2DD3A602008F0B29 /* ChangePasswordController.swift */; };
 		CE9A28FB2DB9370A00EDE3EF /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9A28F02DB9370A00EDE3EF /* FMResultSet.m */; };
 		CE9A28FC2DB9370A00EDE3EF /* info-xrOS.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE9A28F12DB9370A00EDE3EF /* info-xrOS.plist */; };
 		CE9A28FD2DB9370A00EDE3EF /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9A28F22DB9370A00EDE3EF /* FMDatabasePool.m */; };
@@ -84,6 +85,7 @@
 		CE8C48FB2DCB5B6E0074A3AF /* InvoiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceCell.swift; sourceTree = "<group>"; };
 		CE8C48FE2DCB6EFA0074A3AF /* Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
 		CE8C49002DCBADB20074A3AF /* CustomerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerCell.swift; sourceTree = "<group>"; };
+		CE95DCAC2DD3A602008F0B29 /* ChangePasswordController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordController.swift; sourceTree = "<group>"; };
 		CE9A28EE2DB9370900EDE3EF /* DoAnIOS_N1-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DoAnIOS_N1-Bridging-Header.h"; sourceTree = "<group>"; };
 		CE9A28EF2DB9370A00EDE3EF /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDatabasePool.h; path = ../../../../fmdb/src/fmdb/FMDatabasePool.h; sourceTree = "<group>"; };
 		CE9A28F02DB9370A00EDE3EF /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMResultSet.m; path = ../../../../fmdb/src/fmdb/FMResultSet.m; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 				CE8C48F92DCB369B0074A3AF /* InvoiceTableViewController.swift */,
 				CE5B32FF2DD2EC0400120F5E /* CustomerTableViewController.swift */,
 				CE5B33012DD2EE3000120F5E /* CustomerDetailController.swift */,
+				CE95DCAC2DD3A602008F0B29 /* ChangePasswordController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -435,6 +438,7 @@
 				CE5B33002DD2EC0400120F5E /* CustomerTableViewController.swift in Sources */,
 				CE8C48FC2DCB5B6E0074A3AF /* InvoiceCell.swift in Sources */,
 				CEB7C9742DBB2C7F0054A4A7 /* SignUpController.swift in Sources */,
+				CE95DCAD2DD3A602008F0B29 /* ChangePasswordController.swift in Sources */,
 				CEB7EDC72DC8F9F900FEEC0B /* InvoiceDetail.swift in Sources */,
 				CEB7C9782DBB50D20054A4A7 /* HomeViewController.swift in Sources */,
 				CE9A290B2DB93C6800EDE3EF /* ProductCell.swift in Sources */,

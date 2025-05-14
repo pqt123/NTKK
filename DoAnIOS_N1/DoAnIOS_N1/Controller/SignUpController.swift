@@ -69,7 +69,7 @@ class SignUpController: UIViewController {
         
         // Gọi hàm thêm user trong DAO
         // Them product moi vao datasource
-        if let user = User(user_nameuser: userNameText, user_password: passwordText) {
+        if let user = User(user_id: 0, user_nameuser: userNameText, user_password: passwordText) {
             let isSuccess = dao.insertUser(user: user)
 
             if isSuccess {

@@ -363,7 +363,29 @@ class Database{
             }
         }
     }
+    // 5 huy hoa don
+    func invoiceCancel(invoice: Invoice) -> Bool {
+        var OK = false
+        if open() {
+            if database!.tableExists(INV_TABLE_NAME) {
+                //Xoa data dua theo product id
+                let sql = "DELETE FROM \(INV_TABLE_NAME)  WHERE \(INV_ID) = ?"
 
+                // ghi du lie vao bang
+                if database!.executeUpdate(sql, withArgumentsIn: [invoice.inv_id]) {
+                    os_log("Xoa hoa don thanh cong")
+                    OK = true
+                } else {
+                    os_log("Xoa hoa don khong thanh cong", database!.lastErrorMessage())
+                }
+
+                close()
+            } else {
+                os_log("Bang du lieu Invoice khong ton tai")
+            }
+        }
+        return OK
+    }
     //1. Them invoice detail vao du lieu
     func insertInvoiceDetail(invoicedetail: InvoiceDetail) -> Bool {
         var OK = false
@@ -410,16 +432,63 @@ class Database{
             }
         }
     }
+    // 5 Xoa  invoice detai hoa don chi tietl
+    func deleteInvoiceDetail(for invoiceID: Int) -> Bool {
+        var OK = false
+        if open() {
+            if database!.tableExists(INV_DTL_TABLE_NAME) {
+                //Xoa data dua theo product id
+                let sql = "DELETE FROM \(INV_DTL_TABLE_NAME)  WHERE \(INV_DTL_INV_ID) = ?"
+
+                // ghi du lie vao bang
+                if database!.executeUpdate(sql, withArgumentsIn: [invoiceID]) {
+                    os_log("Xoa hoa don detail thanh cong inv_id: \(invoiceID)")
+                    OK = true
+                } else {
+                    os_log("Xoa hoa don detail khong thanh cong", database!.lastErrorMessage())
+                }
+
+                close()
+            } else {
+                os_log("Bang du lieu invoice detail khong ton tai")
+            }
+        }
+        return OK
+    }
+    //4 Update so luong trong bang product
+    func updateProductQty(productid: Int, newQuantity: Int) -> Bool {
+        var OK = false
+        if open() {
+            if database!.tableExists(PRODUCT_TABLE_NAME) {
+                // Cau lenh update qty theo product id
+                let sql = "UPDATE \(PRODUCT_TABLE_NAME) SET \(PRODUCT_QTY) = ?  WHERE \(PRODUCT_ID) = ?"
+                // ghi du lie vao bang
+                if database!.executeUpdate(sql, withArgumentsIn: [newQuantity ,productid]) {
+                    os_log("Cap nhat so luong san pham thanh cong, pro_id : \(productid)")
+                    OK = true
+                } else {
+                    os_log("Cap nhat so luong san pham khong thanh cong", database!.lastErrorMessage())
+                }
+                
+                close()
+            } else {
+                os_log("Bang du lieu khong ton tai")
+            }
+        }
+        return OK
+    }
+    
     //3. ham truy van san pham theo product id
     func getProductByID(productid: Int)-> Product?{
        if open(), database!.tableExists(PRODUCT_TABLE_NAME) {
                let sql =  "SELECT * FROM \(PRODUCT_TABLE_NAME) WHERE \(PRODUCT_ID) = ?"
-                if let result = try? database!.executeQuery(sql, values: [productid]), result.next() {
-                    return Product(
-                        prod_id: Int(result.int(forColumn: PRODUCT_ID)),
-                        prod_name: result.string(forColumn: PRODUCT_NAME) ?? "",
-                        prod_qty: Int(result.int(forColumn: PRODUCT_QTY)),
-                        prod_price: Double(result.int(forColumn: PRODUCT_PRICE))
+                if let result = try? database!.executeQuery(sql, values: [productid]),
+                    result.next() {
+                        return Product(
+                            prod_id: Int(result.int(forColumn: PRODUCT_ID)),
+                            prod_name: result.string(forColumn: PRODUCT_NAME) ?? "",
+                            prod_qty: Int(result.int(forColumn: PRODUCT_QTY)),
+                            prod_price: Double(result.int(forColumn: PRODUCT_PRICE))
                     )
                 }
             }
@@ -464,22 +533,24 @@ class Database{
                     os_log("Khong the truy van CSDL")
                 }
                 // Doc du lieu tu bien result
-                if let result = result {
+                 if let result = result {
                     while result.next(){
+                        let user_id = result.int(forColumn: USER_ID)
                         let user_username = result.string(forColumn: USER_NAME) ?? ""
                         let user_password = result.string(forColumn: USER_PASSWORD) ?? ""
                         // Tao doi tuong user tu CSDL
-                        if let user = User(user_nameuser: user_username, user_password: user_password){
-                            // Dua vao datasource cua TableView
+                        if let user = User(user_id: Int(user_id),
+                                           user_nameuser: user_username,
+                                           user_password: user_password) {
+                        // Dua vao datasource cua TableView
                             users.append(user)
-                            
                         }
                     }
                 }
             }
         }
     }
-    //Kiem tra UserName da ton tai chua
+    //3.Kiem tra UserName da ton tai chua
     func isUsernameExist(user_username: String) -> Bool {
         var isExist = false
         if open() {
@@ -497,24 +568,55 @@ class Database{
         }
         return isExist
     }
-    // Kiểm tra thông tin đăng nhập
-    func checkLogin(user_username: String, user_password: String) -> Bool {
-        var OK = false
+    //4. Kiểm tra thông tin đăng nhập
+    func checkLogin(user_username: String, user_password: String) ->User? {
         if open() {
             let sql = "SELECT * FROM \(USER_TABLE_NAME) WHERE \(USER_NAME) = ? AND \(USER_PASSWORD) = ?"
             do {
                 let result = try database!.executeQuery(sql, values: [user_username, user_password])
                 if result.next() {
-                    OK = true //Neu tim thay ket qua, dang nhap thanh cong
+                    let user_id = result.int(forColumn: USER_ID)
+                    let user_username = result.string(forColumn: USER_NAME) ?? ""
+                    let user_password = result.string(forColumn: USER_PASSWORD) ?? ""
+                    close()
+                    // Tra ve User
+                     return User(user_id : Int(user_id),
+                                       user_nameuser: user_username,
+                                 user_password: user_password)
                 }
             } catch {
                 os_log("Khong the truy van CSDL")
             }
             close()
         }
+        return nil
+    }
+    //5. Change password
+    func updateUserPassword(user:User)->Bool {
+        var OK = false
+        if open() {
+            if database!.tableExists(USER_TABLE_NAME){
+                // Cau lenh SQL
+                let sql = "UPDATE \(USER_TABLE_NAME) SET \(USER_PASSWORD) = ? WHERE \(USER_ID) = ?"
+                // Ghi du lieu vao bang meals cua CSDL
+                if database!.executeUpdate(sql, withArgumentsIn: [user.user_password, user.user_id]){
+                    os_log("Cap nhat password thanh cong")
+                    OK = true
+                }
+                else{
+                    os_log("Cap nhat password khong thanh cong")
+                }
+                // Dong CSDL
+                close()
+            }
+            else{
+                os_log("Bang du lieu chua ton tai ")
+            }
+        }
         return OK
     }
-
+    
+    
     // 1 Them product vao CSDL
     func insertProduct(product:Product)->Bool {
         var OK = false
@@ -632,7 +734,7 @@ class Database{
                                 prod_image = UIImage(data: dataImage!)
                             }
                         }
-                        // Tao doi tuong meal tu CSDL
+                        // Tao doi tuong product tu CSDL
                         if let product = Product(prod_id: Int(prod_id),
                                                  prod_name: prod_name,
                                                  prod_qty: Int(prod_qty),

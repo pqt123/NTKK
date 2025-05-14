@@ -65,10 +65,10 @@ class LoginController: UIViewController,UITextFieldDelegate,UIImagePickerControl
             return
         }
         //Kiem tra du lieu trong bang, neu co tai khoan thi dang nhap thanh cong
-        if dao.checkLogin(user_username: userNameText, user_password: passwordText) {
+        if let user =  dao.checkLogin(user_username: userNameText, user_password: passwordText) {
             // Đăng nhập thành công, chuyển sang màn hình chính
             showAlert(message: "Dang nhap thanh cong!") {
-                self.goToHomeView() // Chuyen den man hinh Home
+                self.goToHomeView(user: user) // Chuyen den man hinh Home
             }
         } else {
             showAlert(message: "Ten username hoac password khong dung.")
@@ -88,13 +88,14 @@ class LoginController: UIViewController,UITextFieldDelegate,UIImagePickerControl
         }
     }
     //func home view
-    func goToHomeView() {
+    func goToHomeView(user: User) {
         let storyboardHome = UIStoryboard(name: "Main", bundle: nil)
             let homeVC = storyboardHome.instantiateViewController(withIdentifier: homeViewID) as! HomeViewController
             //Kiem tra xem co navigationController neu co thi dung UINavigationController, neu khong co thi dung present
             if let nav = self.navigationController {
                 nav.pushViewController(homeVC, animated: true)
             } else {
+                homeVC.userLogin = user //truyen du lieu user qua trang Home
                 homeVC.modalPresentationStyle = .fullScreen //dam bao full man hinh
                 self.present(homeVC, animated: true)
             }

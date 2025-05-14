@@ -1,21 +1,24 @@
 //
-//  HomeViewController.swift
-//  DoAnIOS_Product
+//  ChangePasswordController.swift
+//  DoAnIOS_N1
 //
-//  Created by  User on 25.04.2025.
+//  Created by  User on 13.05.2025.
 //
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class ChangePasswordController: UIViewController,UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    var userLogin:User?
+    
+    @IBOutlet weak var userName: UILabel!
+    @IBOutlet weak var currentPassword: UITextField!
+    @IBOutlet weak var newPassword: UITextField!
+    @IBOutlet weak var confirmPassword: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let user = userLogin{
-            print("User ID : \(user.user_id!) - \(user.user_nameuser)")
-        }
+        //Uy quyen
+        
         // Do any additional setup after loading the view.
     }
     

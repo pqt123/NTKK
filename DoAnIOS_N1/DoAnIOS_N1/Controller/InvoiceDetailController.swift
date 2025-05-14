@@ -22,7 +22,6 @@ class InvoiceDetailController: UIViewController, UITableViewDataSource, UITableV
     // Tao doi tuong truy van CSDL
     private let dao = Database()
     var invoice:Invoice?
-    var invoiceDetail:InvoiceDetail?
     private let selectProductID = "SelectProductController"
     private let selectCustomerID = "CustomerController"
     var cust_id = 0
@@ -79,6 +78,7 @@ class InvoiceDetailController: UIViewController, UITableViewDataSource, UITableV
     }
     // MARK: TableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("count detail : \(invoiceDetails.count)")
         return isViewInvoiceDetail ? invoiceDetails.count : selectedProducts.count
     }
 
@@ -107,7 +107,7 @@ class InvoiceDetailController: UIViewController, UITableViewDataSource, UITableV
     }
     //
     // Override to support editing the table view. ===>check lai
-   /* func tableView(_ tableView: UITableView,
+    /*func tableView(_ tableView: UITableView,
                    commit editingStyle: UITableViewCell.EditingStyle,
                    forRowAt indexPath: IndexPath) {
        
@@ -125,7 +125,7 @@ class InvoiceDetailController: UIViewController, UITableViewDataSource, UITableV
     }
     func tableView(_ tableView: UITableView,
                    titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
-        return "Delete111"
+        return "Delete"
     }*/
     // Nut popup add product
     @IBAction func onAddProductTapped(_ sender: Any) {
@@ -179,7 +179,14 @@ class InvoiceDetailController: UIViewController, UITableViewDataSource, UITableV
                            let _ = dao.insertInvoiceDetail(invoicedetail: invDetail)
                            
                            // Show chi tiet hoa don sau khi select
-                          print("Da them san pham: san pham id: \(product.prod_id!), ten san pham: \(product.prod_name), so luong xuat: \(quantities[index]), gia san pham: \(product.prod_price)")
+                           print("Da them san pham: san pham id: \(invDetail.inv_dtl_prod_id), ten san pham: \(product.prod_name), so luong xuat: \(quantities[index]), gia san pham: \(product.prod_price)")
+                           //Cap nhat so luong san pham sau trong bang product sau khi them hoa don moi thanh cong
+                           let newQty = product.prod_qty - quantities[index]
+                           print("check sl ton \(product.prod_qty) - so luong nhap \(quantities[index])")
+                           
+                           let _ = dao.updateProductQty(productid: invDetail.inv_dtl_prod_id, newQuantity: newQty)
+                           
+                           
                            
                        }
                        else {

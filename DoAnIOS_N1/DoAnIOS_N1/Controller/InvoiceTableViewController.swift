@@ -18,8 +18,11 @@ class InvoiceTableViewController: UITableViewController {
         case editInvoice
     }
 
+    
     var navigationType: NavigationType = .newInvoice
     private var selectedIndexpath: IndexPath?
+    
+    var invoiceDetails: [InvoiceDetail] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +41,7 @@ class InvoiceTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let reuseCell = "InvoiceCell"
-
+        
         if let cell = tableView.dequeueReusableCell(withIdentifier: reuseCell, for: indexPath) as? InvoiceCell {
                     
             // Lay du lieu tu DataSource
@@ -61,7 +64,7 @@ class InvoiceTableViewController: UITableViewController {
              cell.addGestureRecognizer(cell.onTap!)
              }
              */
-            print("\(invoice.inv_customer_id)")
+           // print("check customer id : \(invoice.inv_customer_id)")
             return cell
         }
         
@@ -76,8 +79,8 @@ class InvoiceTableViewController: UITableViewController {
         }
         
     }
-    
-    @IBAction func reloadTableInv(_ sender: UIBarButtonItem) {
+    func callDataInv(){
+        print("call load data")
         invoices.removeAll()
         let _ = dao.readInvoices(invoices: &invoices)
         tableView.reloadData()
@@ -100,18 +103,62 @@ class InvoiceTableViewController: UITableViewController {
         
     }
     // Override to support editing the table view.
-  /*  override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Xoa phan tu tu datasource
-            invoices.remove(at: indexPath.row)
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            //Lay khach hang can xoa
+            let invoiceCancel = invoices[indexPath.row]
+            
+            //Xac nhan truoc khi thuc hien xoa hoa don
+            
+            let alert = UIAlertController(title: "Xac nhan", message: "Ban co chac chan muon huy hoa don nay khong ?", preferredStyle: .alert)
+            
+            let confirmAction = UIAlertAction(title: "Xac nhan", style: .default) {_ in
+                //Thuc hien tung buoc: cap nhat so luong san pham, xoa chi tiet hoa don, xoa hoa don
+                if let inv_id = invoiceCancel.inv_id {
+                    print("check_inv : \(inv_id)")
+                    let invoiceDteails = self.dao.readInvoiceDetails(for: inv_id, invoicedetails: &self.invoiceDetails)
+                    for invdetail in self.invoiceDetails {
+                        if let product = self.dao.getProductByID(productid: invdetail.inv_dtl_prod_id){
+                            let updQuantity = product.prod_qty + invdetail.inv_dtl_qty
+                            let _ = self.dao.updateProductQty(productid: product.prod_id!, newQuantity: updQuantity)
+                        }
+                    }
+                    //Xoa hoa don chi tiet
+                    let _ = self.dao.deleteInvoiceDetail(for: inv_id)
+                    
+                    //Cancel hoa don
+                    if self.dao.invoiceCancel(invoice: invoiceCancel){
+                        //xoa khoi datasource
+                        self.invoices.remove(at: indexPath.row)
+                        // Delete the row from the data source
+                        tableView.deleteRows(at: [indexPath], with: .fade)
+                        
+                    } else{
+                        print("Huy hoa don khong thanh cong")
+                    }
+                    
+                }else{
+                    print("khong co data")
+                }
+                
+            }
+            
+            //Nut huy hanh dong
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+            
+            alert.addAction(confirmAction)
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true)
+            
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
-    }*/
-    
-    
+    }
+    //Chang delete ->Huy
+    override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath)->String? {
+        return "Huy"
+    }
 
     @IBAction func unwindFromInvoiceDetail(_ segue: UIStoryboardSegue) {
         if let detailVC = segue.source as? InvoiceDetailController,
@@ -124,6 +171,8 @@ class InvoiceTableViewController: UITableViewController {
                 
                 //Them invoice moi vao CSDL
                 //let _ = dao.insertInvoice(invoice: invoice)
+                //Sau khi them hoa don moi, goi lai datasource
+                callDataInv()
             case .editInvoice:
                 if let indexPath = selectedIndexpath {
                     // Update datasource
@@ -131,7 +180,6 @@ class InvoiceTableViewController: UITableViewController {
                     
                     // Update tableView cell
                     // Edit product moi vao CSDL
-                   // let _ = dao.editProduct(product: product)
                     tableView.reloadRows(at: [indexPath], with: .left)
                 }
             }
@@ -154,9 +202,8 @@ class InvoiceTableViewController: UITableViewController {
                     // Luu vi tri cell duoc chon
                     selectedIndexpath = indexPath
                     
-                    print("tetttt22222")
                     // Chuyen sang man hinh khac
-                    //present(mealDetail, animated: true)
+                    present(invDetail, animated: true)
                 }
             }
         }
