@@ -579,7 +579,7 @@ class Database{
                     let user_username = result.string(forColumn: USER_NAME) ?? ""
                     let user_password = result.string(forColumn: USER_PASSWORD) ?? ""
                     close()
-                    // Tra ve User
+                    // Tra ve User 
                      return User(user_id : Int(user_id),
                                        user_nameuser: user_username,
                                  user_password: user_password)

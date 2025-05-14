@@ -99,7 +99,8 @@ class LoginController: UIViewController,UITextFieldDelegate,UIImagePickerControl
                 homeVC.modalPresentationStyle = .fullScreen //dam bao full man hinh
                 self.present(homeVC, animated: true)
             }
-    }    //show Alert
+    }
+    //show Alert
     // MARK: - Hàm thông báo
     
     func showAlert(message: String, completion: (() -> Void)? = nil) {
